@@ -13,7 +13,7 @@ RUN apt-get update && apt-get install -y xvfb wget openjdk-7-jre && \
     mkdir /protractor
 ADD protractor.sh /protractor.sh
 RUN chmod +x /protractor.sh
-#is better to run selenium grid that selenium standalone
+#is better to run selenium grid instead selenium standalone
 RUN webdriver-manager start --detach
 # Fix for the issue with Selenium, as described here:
 # https://github.com/SeleniumHQ/docker-selenium/issues/87
