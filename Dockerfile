@@ -1,10 +1,10 @@
 FROM node:slim
-MAINTAINER j.ciolek@webnicer.com
+MAINTAINER Edgard Aviles "eavilesmejia@gmail.com"
+ENV UPDATED_AT 2016-12-14
 WORKDIR /tmp
-RUN npm install -g protractor mocha jasmine && \
+RUN apt-get update && apt-get install -y xvfb wget openjdk-7-jre && \
+    npm install -g protractor mocha jasmine karma && \
     webdriver-manager update && \
-    apt-get update && \
-    apt-get install -y xvfb wget openjdk-7-jre && \
     wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb && \
     dpkg --unpack google-chrome-stable_current_amd64.deb && \
     apt-get install -f -y && \
@@ -12,6 +12,7 @@ RUN npm install -g protractor mocha jasmine && \
     rm google-chrome-stable_current_amd64.deb && \
     mkdir /protractor
 ADD protractor.sh /protractor.sh
+RUN chmod +x /protractor.sh
 # Fix for the issue with Selenium, as described here:
 # https://github.com/SeleniumHQ/docker-selenium/issues/87
 ENV DBUS_SESSION_BUS_ADDRESS=/dev/null
