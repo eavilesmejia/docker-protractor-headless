@@ -2,7 +2,7 @@ FROM node:slim
 MAINTAINER Edgard Aviles "edgard.aviles@ooqia.com"
 ENV UPDATED_AT 2016-12-14
 WORKDIR /tmp
-RUN apt-get update && apt-get install -y xvfb wget openjdk-7-jre && \
+RUN apt-get update && apt-get install -y xvfb wget net-tools openjdk-7-jre && \
     npm install -g protractor mocha jasmine && \
     webdriver-manager update && \
     wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb && \
