@@ -15,6 +15,7 @@ ADD protractor.sh /protractor.sh
 RUN chmod +x /protractor.sh
 #is better to run selenium grid instead selenium standalone
 RUN webdriver-manager start --detach
+EXPOSE 4444
 # Fix for the issue with Selenium, as described here:
 # https://github.com/SeleniumHQ/docker-selenium/issues/87
 ENV DBUS_SESSION_BUS_ADDRESS=/dev/null
