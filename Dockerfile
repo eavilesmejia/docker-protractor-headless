@@ -13,11 +13,9 @@ RUN apt-get update && apt-get install -y xvfb wget net-tools openjdk-7-jre && \
     mkdir /protractor
 ADD protractor.sh /protractor.sh
 RUN chmod +x /protractor.sh
-#is better to run selenium grid instead selenium standalone
-CMD ['webdriver-manager', 'start', '--detach']
-# EXPOSE 4444
+EXPOSE 4444
 # Fix for the issue with Selenium, as described here:
 # https://github.com/SeleniumHQ/docker-selenium/issues/87
 ENV DBUS_SESSION_BUS_ADDRESS=/dev/null
 WORKDIR /protractor
-# ENTRYPOINT ["/protractor.sh"]
+ENTRYPOINT ["/protractor.sh"]
