@@ -16,6 +16,6 @@ RUN chmod +x /protractor.sh
 EXPOSE 4444
 # Fix for the issue with Selenium, as described here:
 # https://github.com/SeleniumHQ/docker-selenium/issues/87
-# ENV DBUS_SESSION_BUS_ADDRESS=/dev/null
+ENV DBUS_SESSION_BUS_ADDRESS=/dev/null
 WORKDIR /protractor
 ENTRYPOINT ["/protractor.sh"]
