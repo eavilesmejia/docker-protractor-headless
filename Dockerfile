@@ -3,7 +3,7 @@ MAINTAINER Edgard Aviles "edgard.aviles@ooqia.com"
 ENV UPDATED_AT 2016-12-14
 WORKDIR /tmp
 RUN apt-get update -qqy  && apt-get install -qqy python-software-properties && \  
-    add-apt-repository ppa:webupd8team/java && \
+    add-apt-repository ppa:webupd8team/java -y && \
     apt-get update -qqy && apt-get install -qqy oracle-java8-installer 
 RUN apt-get install -qqy xvfb wget net-tools && \
     npm install -g protractor mocha jasmine && \
