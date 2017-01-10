@@ -1,33 +1,60 @@
-# Docker image of Protractor with headless Chrome
+# Docker image of Protractor linked with selenium hub and selnium node
 
-Protractor end to end testing for AngularJS - dockerised with headless real Chrome.
+Protractor end to end testing for AngularJS
 
-## Why headless Chrome?
 
-PhantomJS is [discouraged by Protractor creators](https://angular.github.io/protractor/#/browser-setup#setting-up-phantomjs) and for a good reason. It's basically a bag of problems. 
-
-## What is headless Chrome anyway?
-
-To be perfectly honest - it is a [real chrome running on xvfb](http://tobyho.com/2015/01/09/headless-browser-testing-xvfb/). Therefore you have every confidence that the tests are run on the real thing.
 
 # Usage
 
+## Step 0 - Download the docker images for Selenium Hub and Selenium Node
+
 ```
-docker run -it --privileged --rm --net=host -v /dev/shm:/dev/shm -v $(pwd):/protractor webnicer/protractor-headless [protractor options]
+docker pull selenium/hub:latest
+docker pull selenium/node-chrome:latest
 ```
+
+## Step 1 - Download the docker protractor images
+
+```
+docker pull avilem/docker-protractor-headless
+```
+
+## Step 2 - Running the container
+
+### Running the selenium container:
+```
+docker run -d -p 4444:4444 --name hub selenium/hub
+docker run -d --link hub:hub --name node selenium/node-chrome
+````
+
+### Running the protractor container:
+
+```
+docker run --rm -it --privileged -v /dev/sh:/dev/shm -v "$(pwd)":/protractor --link hub:hub --link node:node avilem/docker-protractor-headless $@
+````
 
 This will run protractor in your current directory, so you should run it in your tests root directory. It is useful to create a script, for example /usr/local/bin/protractor.sh such as this:
 
 ```
 #!/bin/bash
 
-docker run -it --privileged --rm --net=host -v /dev/shm:/dev/shm -v $(pwd):/protractor webnicer/protractor-headless $@
+docker run --rm -it --privileged -v /dev/shm:/dev/shm -v "$(pwd)":/protractor --link hub:hub --link node:node avilem/docker-protractor-headless $@
 ```
 
 The script will allow you to run dockerised protractor like so:
 
 ```
 protractor.sh [protractor options]
+```
+
+## protractor conf.js
+
+```
+exports.config = {
+  ...
+  seleniumAddress: 'http://hub:4444/wd/hub',
+  ...
+};
 ```
 
 ## Why mapping `/dev/shm`?
@@ -44,8 +71,5 @@ Chrome uses sandboxing, therefore if you try and run Chrome within a non-privile
 
 The [`--privileged`](https://docs.docker.com/engine/reference/run/#runtime-privilege-and-linux-capabilities) flag gives the container almost the same privileges to the host machine resources as other processes running outside the container, which is required for the sandboxing to run smoothly.
 
-## Why `--net=host`?
-
-This options is required **only** if the dockerised Protractor is run against localhost on the host. Imagine this sscenario: you run an http test server on your local machine, let's say on port 8000. You type in your browser `http://localhost:8000` and everything goes smoothly. Then you want to run the dockerised Protractor against the same localhost:8000. If you don't use `--net=host` the container will receive the bridged interface and its own loopback and so the `localhost` within the container will refer to the container itself. Using `--net=host` you allow the container to share host's network stack and properly refer to the host when Protractor is run against `localhost`.
 
 
