@@ -2,7 +2,10 @@ FROM node:slim
 MAINTAINER Edgard Aviles "edgard.aviles@ooqia.com"
 ENV UPDATED_AT 2016-12-14
 WORKDIR /tmp
-RUN apt-get update && apt-get install -y xvfb wget net-tools openjdk-7-jre && \
+RUN apt-get update -qqy  && apt-get install -qqy python-software-properties && \  
+    add-apt-repository ppa:webupd8team/java && \
+    apt-get update -qqy && apt-get install -qqy oracle-java8-installer 
+RUN apt-get install -qqy xvfb wget net-tools && \
     npm install -g protractor mocha jasmine && \
     webdriver-manager update && \
     wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb && \
