@@ -8,7 +8,7 @@ RUN echo "deb http://ppa.launchpad.net/webupd8team/java/ubuntu trusty main" >> /
     
 RUN apt-get update -qqy  && \
     echo "oracle-java8-installer shared/accepted-oracle-license-v1-1 select true" | /usr/bin/debconf-set-selections && \
-    apt-get update -qqy && apt-get install -qqy oracle-java8-installer oracle-java8-set-default
+    apt-get update -qqy && apt-get install -qqy oracle-java7-installer oracle-java7-set-default
     
 RUN apt-get install -qqy xvfb wget net-tools && \
     npm install -g protractor mocha jasmine && \
