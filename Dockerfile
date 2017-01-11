@@ -2,9 +2,13 @@ FROM node:slim
 MAINTAINER Edgard Aviles "edgard.aviles@ooqia.com"
 ENV UPDATED_AT 2016-12-14
 WORKDIR /tmp
-RUN apt-get update -qqy  && apt-get install -qqy python-software-properties && \  
-    add-apt-repository ppa:webupd8team/java -y && \
-    apt-get update -qqy && apt-get install -qqy oracle-java8-installer 
+RUN echo "deb http://ppa.launchpad.net/webupd8team/java/ubuntu trusty main" >> /etc/apt/sources.list && \
+    echo "deb-src http://ppa.launchpad.net/webupd8team/java/ubuntu trusty main" >> /etc/apt/sources.list && \
+    apt-key adv --keyserver keyserver.ubuntu.com --recv-keys EEA14886
+    
+RUN apt-get update -qqy  && \
+    apt-get update -qqy && apt-get install -qqy oracle-java8-installer oracle-java8-set-default
+    
 RUN apt-get install -qqy xvfb wget net-tools && \
     npm install -g protractor mocha jasmine && \
     webdriver-manager update && \
