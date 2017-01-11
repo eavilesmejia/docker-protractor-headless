@@ -1,16 +1,8 @@
 FROM node:slim
 MAINTAINER Edgard Aviles "edgard.aviles@ooqia.com"
-ENV UPDATED_AT 2016-12-14
+ENV UPDATED_AT 2017-01-11
 WORKDIR /tmp
-RUN echo "deb http://ppa.launchpad.net/webupd8team/java/ubuntu trusty main" >> /etc/apt/sources.list && \
-    echo "deb-src http://ppa.launchpad.net/webupd8team/java/ubuntu trusty main" >> /etc/apt/sources.list && \
-    apt-key adv --keyserver keyserver.ubuntu.com --recv-keys EEA14886
-    
-RUN apt-get update -qqy  && \
-    echo "oracle-java8-installer shared/accepted-oracle-license-v1-1 select true" | /usr/bin/debconf-set-selections && \
-    apt-get update -qqy && apt-get install -qqy oracle-java8-installer oracle-java8-set-default
-    
-RUN apt-get install -qqy xvfb wget net-tools && \
+RUN apt-get update && apt-get install -y xvfb wget net-tools openjdk-7-jre && \
     npm install -g protractor mocha jasmine && \
     webdriver-manager update && \
     wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb && \
