@@ -24,5 +24,6 @@ RUN chmod +x /protractor.sh
 # Fix for the issue with Selenium, as described here:
 # https://github.com/SeleniumHQ/docker-selenium/issues/87
 ENV DBUS_SESSION_BUS_ADDRESS=/dev/null
+RUN xvfb-run -a --server-args='-screen 0 1280x1024x24' webdriver-manager start --detach
 WORKDIR /protractor
 ENTRYPOINT ["/protractor.sh"]
