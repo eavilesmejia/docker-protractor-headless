@@ -1,5 +1,7 @@
 #!/bin/bash
 
-webdriver-manager start --detach
-xvfb-run -a --server-args='-screen 0 1280x1024x24' protractor $@
+export DISPLAY=:1.0
+Xvfb :0 -ac -screen 0 1024x768x24 &
+webdriver-manager start --detach 
+protractor $@
 
