@@ -1,6 +1,6 @@
 FROM node:slim
 MAINTAINER Edgard Aviles "edgard.aviles@ooqia.com"
-ENV UPDATED_AT 2016-12-14
+ENV UPDATED_AT 2017-01-21
 WORKDIR /tmp
 RUN echo "deb http://ppa.launchpad.net/webupd8team/java/ubuntu trusty main" >> /etc/apt/sources.list && \
     echo "deb-src http://ppa.launchpad.net/webupd8team/java/ubuntu trusty main" >> /etc/apt/sources.list && \
@@ -24,6 +24,6 @@ RUN chmod +x /protractor.sh
 # Fix for the issue with Selenium, as described here:
 # https://github.com/SeleniumHQ/docker-selenium/issues/87
 ENV DBUS_SESSION_BUS_ADDRESS=/dev/null
-RUN xvfb-run -a --server-args='-screen 0 1280x1024x24' webdriver-manager start --detach
+ENV SCREEN_RES=1280x1024x24
 WORKDIR /protractor
 ENTRYPOINT ["/protractor.sh"]
