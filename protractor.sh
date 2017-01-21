@@ -1,3 +1,3 @@
 #!/bin/bash
-xvfb-run -a --server-args='-noreset -screen 0 ${SCREEN_RES}' protractor $@
+xvfb-run --server-num=${SERVER_NUM} --server-args='-screen 0 ${SCREEN_RES}' protractor $@
 

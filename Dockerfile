@@ -20,10 +20,13 @@ RUN apt-get install -qqy xvfb wget net-tools && \
     rm google-chrome-stable_current_amd64.deb && \
     mkdir /protractor
 ADD protractor.sh /protractor.sh
+ADD xvfb-run-safe /usr/bin/
+RUN chmod +x /usr/bin/xvfb-run-safe
 RUN chmod +x /protractor.sh
 # Fix for the issue with Selenium, as described here:
 # https://github.com/SeleniumHQ/docker-selenium/issues/87
 ENV DBUS_SESSION_BUS_ADDRESS=/dev/null
 ENV SCREEN_RES=1280x1024x24
+ENV SERVER_NUM=0
 WORKDIR /protractor
 ENTRYPOINT ["/protractor.sh"]
