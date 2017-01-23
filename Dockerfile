@@ -27,6 +27,6 @@ RUN chmod +x /protractor.sh
 # https://github.com/SeleniumHQ/docker-selenium/issues/87
 ENV DBUS_SESSION_BUS_ADDRESS=/dev/null
 ENV SCREEN_RES=1280x1024x24
-ENV SERVER_NUM=0
+ENV SERVERNUM=1
 WORKDIR /protractor
 ENTRYPOINT ["/protractor.sh"]
